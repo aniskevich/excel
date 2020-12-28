@@ -1,9 +1,10 @@
 import {ExcelComponent} from '@core/ExcelComponent'
 
 export class Table extends ExcelComponent {
+  static className = 'excel__table'
+
   toHTML() {
     return `
-      <div class="excel__table">
         <div class="row">
           <div class="row-info">
           
@@ -40,7 +41,6 @@ export class Table extends ExcelComponent {
             <div class="cell">C2</div>
           </div>
         </div>
-      </div>
     `
   }
 }
