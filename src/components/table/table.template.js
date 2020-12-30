@@ -5,14 +5,23 @@ const CHAR_CODES = {
 const createRow = (data, index = '') => {
   return `
     <div class="row">
-      <div class="row-info">${index}</div>
-      <div class="row-data">${data}</div>
+      <div class="row-info">
+        ${index}
+        ${index ? '<div class="row-resize" data-resize="row"></div>' : ''}
+      </div>
+      <div class="row-data">
+        ${data}
+      </div>
     </div>
  `
 }
 const createColumn = (content) => {
   return `
-    <div class="column">${content}</div>
+    <div class="column">
+        ${content}
+        <div class="col-resize" data-resize="col"></div>
+    </div>
+    
   `
 }
 const createCell = (content) => {
