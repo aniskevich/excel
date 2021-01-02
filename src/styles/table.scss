@@ -39,10 +39,22 @@
       width: $info-cell-width;
       background: $primary-color;
       opacity: 0;
+      z-index: 100;
+
+      & .helper {
+        position: absolute;
+        left: 0;
+        top: 1px;
+        height: 1px;
+        width: 100vw;
+        background: $primary-color;
+        opacity: 1;
+        z-index: 100;
+      }
 
       &:hover {
         cursor: row-resize;
-        opacity: 1;
+        opacity: 1!important;
       }
     }
   }
@@ -69,10 +81,22 @@
     width: 4px;
     background: $primary-color;
     opacity: 0;
+    z-index: 100;
+
+    & .helper {
+      position: absolute;
+      top: 0;
+      right: 2px;
+      height: 100vh;
+      width: 1px;
+      background: $primary-color;
+      opacity: 1;
+      z-index: 100;
+    }
 
     &:hover {
       cursor: col-resize;
-      opacity: 1;
+      opacity: 1!important;
     }
   }
 
@@ -94,4 +118,5 @@
       z-index: 100;
     }
   }
+
 }

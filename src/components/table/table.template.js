@@ -4,7 +4,7 @@ const CHAR_CODES = {
 }
 const createRow = (data, index = '') => {
   return `
-    <div class="row">
+    <div class="row" data-type="resizable">
       <div class="row-info">
         ${index}
         ${index ? '<div class="row-resize" data-resize="row"></div>' : ''}
@@ -15,18 +15,18 @@ const createRow = (data, index = '') => {
     </div>
  `
 }
-const createColumn = (content) => {
+const createColumn = (content, index) => {
   return `
-    <div class="column">
+    <div class="column" data-type="resizable" data-col="${index}">
         ${content}
-        <div class="col-resize" data-resize="col"></div>
+        <div class="col-resize" data-resize="col" data-col-id="${index}"></div>
     </div>
     
   `
 }
-const createCell = (content) => {
+const createCell = (_, index) => {
   return `
-    <div class="cell" contenteditable="">${content}</div>
+    <div class="cell" contenteditable="" data-col="${index}"></div>
   `
 }
 const toChar = (_, index) => String.fromCharCode(CHAR_CODES.A + index)
