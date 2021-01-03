@@ -1,4 +1,5 @@
 import {$} from '@core/DOM'
+import {range} from '@core/utils'
 
 export function resizeHandler($root, event) {
   const $resizer = $(event.target)
@@ -41,4 +42,40 @@ export function resizeHandler($root, event) {
 
 export function shouldResize(event) {
   return event.target.dataset.resize
+}
+
+export function isCell(event) {
+  return event.target.classList.contains('cell')
+}
+
+export function matrix(current, target) {
+  const rows = range(current.row, target.row)
+  const cols = range(current.col, target.col)
+  const ids = cols.reduce((acc, col) => {
+    rows.forEach(row => acc.push(`${row}:${col}`))
+    return acc
+  }, [])
+  return ids
+}
+
+export function nextSelector(key, {row, col}) {
+  const MIN_VALUE = 0
+  switch (key) {
+    case 'ArrowUp':
+      row = row - 1 < MIN_VALUE ? MIN_VALUE : row - 1
+      break
+    case 'ArrowDown':
+    case 'Enter':
+      ++row
+      break
+    case 'ArrowLeft':
+      col = col - 1 < MIN_VALUE ? MIN_VALUE : col - 1
+      break
+    case 'ArrowRight':
+    case 'Tab':
+      ++col
+      break
+    default: return
+  }
+  return `[data-id="${row}:${col}"]`
 }

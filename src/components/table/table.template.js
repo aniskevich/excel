@@ -24,11 +24,19 @@ const createColumn = (content, index) => {
     
   `
 }
-const createCell = (_, index) => {
-  return `
-    <div class="cell" contenteditable="" data-col="${index}"></div>
-  `
+function createCell(row) {
+  return function(_, index) {
+    return `
+        <div 
+            class="cell" 
+            contenteditable="" 
+            data-col="${index}" 
+            data-id="${row}:${index}"
+        ></div>
+    `
+  }
 }
+
 const toChar = (_, index) => String.fromCharCode(CHAR_CODES.A + index)
 export const createTable = (rowsCount) => {
   const colsCount = CHAR_CODES.Z - CHAR_CODES.A + 1
@@ -38,13 +46,14 @@ export const createTable = (rowsCount) => {
       .map(toChar)
       .map(createColumn)
       .join('')
-  const cells = new Array(colsCount)
-      .fill('')
-      .map(createCell)
-      .join('')
+
   rows.push(createRow(cols))
-  for (let i = 0; i < rowsCount; i++) {
-    rows.push(createRow(cells, i + 1))
+  for (let row = 0; row < rowsCount; row++) {
+    const cells = new Array(colsCount)
+        .fill('')
+        .map(createCell(row))
+        .join('')
+    rows.push(createRow(cells, row + 1))
   }
   return rows.join('')
 }

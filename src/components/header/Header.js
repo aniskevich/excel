@@ -1,7 +1,17 @@
 import {ExcelComponent} from '@core/ExcelComponent'
+import {TableSelection} from '@/components/table/TableSelection';
 
 export class Header extends ExcelComponent {
   static className = 'excel__header'
+
+  constructor($root, options) {
+    super($root, {
+      name: 'Header',
+      listeners: [],
+      ...options,
+    })
+    this.selection = new TableSelection()
+  }
 
   toHTML() {
     return `
