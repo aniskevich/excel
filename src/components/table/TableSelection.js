@@ -19,4 +19,7 @@ export class TableSelection {
     this.elements.forEach(el => el.removeClass(TableSelection.className))
     this.elements = []
   }
+  applyStyle(style) {
+    this.elements.forEach(el => el.css(style))
+  }
 }

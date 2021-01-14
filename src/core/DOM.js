@@ -22,6 +22,10 @@ class DOM {
     return this.$el.textContent.trim()
   }
 
+  get data() {
+    return this.$el.dataset
+  }
+
   clear() {
     this.html('')
     return this
@@ -84,6 +88,13 @@ class DOM {
   focus() {
     this.$el.focus()
     return this
+  }
+
+  getStyles(styles = []) {
+    return styles.reduce((res, style) => {
+      res[style] = this.$el.style[style]
+      return res
+    }, {})
   }
 }
 

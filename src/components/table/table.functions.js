@@ -2,42 +2,52 @@ import {$} from '@core/DOM'
 import {range} from '@core/utils'
 
 export function resizeHandler($root, event) {
-  const $resizer = $(event.target)
-  const $parent = $resizer.closest('[data-type="resizable"]')
-  const coords = $parent.getCoords()
-  const type = event.target.dataset.resize
-  let cols
-  if (type === 'col') {
-    const colId = $resizer.$el.dataset.colId
-    cols = $root.findAll(`[data-col="${colId}"]`)
-  }
-  let delta
-  const $helper = $.create('div', 'helper')
-  $resizer.append($helper)
-  document.onmousemove = e => {
-    $resizer.css({opacity: '1'})
+  return new Promise(resolve => {
+    const $resizer = $(event.target)
+    const $parent = $resizer.closest('[data-type="resizable"]')
+    const coords = $parent.getCoords()
+    const type = event.target.dataset.resize
+    let cols
+    let value
     if (type === 'col') {
-      delta = e.pageX - coords.right
-      $resizer.css({right: -delta + 'px'})
-    } else {
-      delta = e.pageY - coords.bottom
-      $resizer.css({bottom: -delta + 'px'})
+      const colId = $resizer.data.colId
+      cols = $root.findAll(`[data-col="${colId}"]`)
     }
-  }
+    let delta
+    const $helper = $.create('div', 'helper')
+    $resizer.append($helper)
+    document.onmousemove = e => {
+      $resizer.css({opacity: '1'})
+      if (type === 'col') {
+        delta = e.pageX - coords.right
+        $resizer.css({right: -delta + 'px'})
+      } else {
+        delta = e.pageY - coords.bottom
+        $resizer.css({bottom: -delta + 'px'})
+      }
+    }
 
-  document.onmouseup = () => {
-    if (type === 'col') {
-      $resizer.css({right: '0'})
-      cols.forEach(el => $(el).css({width: `${coords.width + delta}px`}))
-    } else if (type === 'row') {
-      $parent.css({height: `${coords.height + delta}px`})
-      $resizer.css({bottom: '0'})
+    document.onmouseup = () => {
+      if (type === 'col') {
+        value = coords.width + delta
+        $resizer.css({right: '0'})
+        cols.forEach(el => $(el).css({width: `${value}px`}))
+      } else if (type === 'row') {
+        value = coords.height + delta
+        $parent.css({height: `${coords.height + delta}px`})
+        $resizer.css({bottom: '0'})
+      }
+      resolve({
+        id: $parent.data[type],
+        value,
+        type,
+      })
+      $resizer.css({opacity: '0'})
+      $resizer.clear()
+      document.onmouseup = null
+      document.onmousemove = null
     }
-    $resizer.css({opacity: '0'})
-    $resizer.clear()
-    document.onmouseup = null
-    document.onmousemove = null
-  }
+  })
 }
 
 export function shouldResize(event) {
