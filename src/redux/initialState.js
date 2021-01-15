@@ -8,8 +8,16 @@ const defaultState = {
   stylesState: {},
   currentStyles: defaultStyles,
   currentText: '',
+  title: '',
 }
 
+const normalize = state => ({
+  ...state,
+  currentStyles: defaultStyles,
+  currentText: '',
+})
+
+
 export const initialState = storage('excel')
-  ? storage('excel')
+  ? normalize(storage('excel'))
   : defaultState

@@ -1,5 +1,4 @@
-import {defaultStyles} from '@/constants'
-import {camelToDashCase} from '@core/utils'
+import {toInlineStyles} from '@core/utils'
 
 const CHAR_CODES = {
   A: 65,
@@ -44,8 +43,7 @@ const createColumn = ({content, index, width}) => {
 function createCell(row, state) {
   return function(_, index) {
     const id = `${row}:${index}`
-    const styles = Object.keys(defaultStyles)
-        .map(key => `${camelToDashCase(key)}: ${defaultStyles[key]}`).join(';')
+    const styles = toInlineStyles(state.stylesState[id])
     const width = getWidth(state.colState, index)
     return `
         <div 

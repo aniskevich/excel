@@ -22,4 +22,7 @@ export class TableSelection {
   applyStyle(style) {
     this.elements.forEach(el => el.css(style))
   }
+  get selectedIds() {
+    return this.elements.map(el => el.data.id)
+  }
 }

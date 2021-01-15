@@ -1,7 +1,7 @@
 import {
-  APPLY_STYLES,
+  APPLY_STYLE,
   CHANGE_STYLES,
-  CHANGE_TEXT,
+  CHANGE_TEXT, CHANGE_TITLE,
   TABLE_RESIZE,
 } from '@redux/types'
 
@@ -20,14 +20,18 @@ export function rootReducer(state, action) {
       return {...state, dataState: prevState, currentText: action.data.value}
     case CHANGE_STYLES:
       return {...state, currentStyles: action.data}
-    case APPLY_STYLES:
+    case APPLY_STYLE:
       prevState = state.stylesState || {}
-      prevState[action.data.id] = action.data.value
+      action.data.ids.forEach(id => {
+        prevState[id] = {...prevState[id], ...action.data.value}
+      })
       return {
         ...state,
         currentStyles: {...state.currentStyles, ...action.data.value},
         stylesState: prevState,
       }
+    case CHANGE_TITLE:
+      return {...state, title: action.data}
     default: return state
   }
 }
