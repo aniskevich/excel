@@ -1,4 +1,5 @@
-import {toInlineStyles} from '@core/utils'
+import {parse, toInlineStyles} from '@core/utils'
+import {defaultStyles} from '@/constants'
 
 const CHAR_CODES = {
   A: 65,
@@ -43,7 +44,8 @@ const createColumn = ({content, index, width}) => {
 function createCell(row, state) {
   return function(_, index) {
     const id = `${row}:${index}`
-    const styles = toInlineStyles(state.stylesState[id])
+    const data = state.dataState[id]
+    const styles = toInlineStyles({...defaultStyles, ...state.stylesState[id]})
     const width = getWidth(state.colState, index)
     return `
         <div 
@@ -52,7 +54,8 @@ function createCell(row, state) {
             data-col="${index}" 
             data-id="${id}"
             style="${styles}; width: ${width}"
-        >${state.dataState[id] || ''}</div>
+            data-value="${data || ''}"
+        >${parse(data) || ''}</div>
     `
   }
 }

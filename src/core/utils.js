@@ -45,3 +45,14 @@ export function debounce(fn, wait) {
     timeout = setTimeout(later, wait)
   }
 }
+
+export function parse(text = '') {
+  if (text.startsWith('=')) {
+    try {
+      return eval(text.slice(1)).toString()
+    } catch (e) {
+      return text
+    }
+  }
+  return text
+}
