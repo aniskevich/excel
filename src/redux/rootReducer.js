@@ -1,5 +1,6 @@
 import {
   APPLY_STYLE,
+  CHANGE_OPENED_DATE,
   CHANGE_STYLES,
   CHANGE_TEXT, CHANGE_TITLE,
   TABLE_RESIZE,
@@ -32,6 +33,8 @@ export function rootReducer(state, action) {
       }
     case CHANGE_TITLE:
       return {...state, title: action.data}
+    case CHANGE_OPENED_DATE:
+      return {...state, openedDate: new Date().toJSON()}
     default: return state
   }
 }

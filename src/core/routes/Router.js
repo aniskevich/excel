@@ -24,7 +24,7 @@ export class Router {
     } else {
       Page = this.routes.dashboard
     }
-    this.page = new Page()
+    this.page = new Page(ActiveRoute.param)
     this.$placeholder.append(this.page.getRoot())
     this.page.afterRender()
   }

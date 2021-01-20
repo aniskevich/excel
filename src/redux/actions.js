@@ -1,5 +1,6 @@
 import {
   APPLY_STYLE,
+  CHANGE_OPENED_DATE,
   CHANGE_STYLES,
   CHANGE_TEXT, CHANGE_TITLE,
   TABLE_RESIZE,
@@ -19,4 +20,7 @@ export function applyStyle(data) {
 }
 export function changeTitle(data) {
   return {type: CHANGE_TITLE, data}
+}
+export function changeOpenedDate() {
+  return {type: CHANGE_OPENED_DATE}
 }
